@@ -1,4 +1,4 @@
-
+<?php
 //===============================================
 // Register sidebar widgets 
 //===============================================
@@ -32,7 +32,6 @@ add_action('widgets_init', 'halim_theme_slug_widgets_init');
 //===============================================
 // Show widgets in frontend
 //===============================================
-
   <?php if (is_active_sidebar('footer-2')) : ?>
           <?php dynamic_sidebar('footer-2'); ?>
     <?php endif; ?> 
