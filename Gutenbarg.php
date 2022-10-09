@@ -46,19 +46,22 @@ function halim_theme_slug_widgets_init()
 }
 add_action('widgets_init', 'halim_theme_slug_widgets_init');
 
+
 //===============================================
 // Show widgets in frontend
 //===============================================
-  <?php if (is_active_sidebar('footer-2')) : ?>
-          <?php dynamic_sidebar('footer-2'); ?>
-    <?php endif; ?> 
+  <?php if (is_active_sidebar('footer-2')) : 
+          dynamic_sidebar('footer-2'); 
+   endif; ?> 
     
     
- <?php
+
 
 // ================================================
 //  Widget stractour ========= 
 // ================================================
+
+<?php
 
 // Creating the widget
 class wpb_widget extends WP_Widget {
