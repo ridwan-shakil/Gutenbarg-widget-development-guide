@@ -58,7 +58,7 @@ add_action('widgets_init', 'halim_theme_slug_widgets_init');
 
 
 // ================================================
-//  Widget stractour ========= 
+//  Widget structure ========= 
 // ================================================
 
 <?php
