@@ -1,6 +1,6 @@
 <?php
 
-// ============= Recent posts halim ===============
+// ============= Recent posts ===============
 
 class recent_posts extends WP_Widget
 {
@@ -10,7 +10,7 @@ class recent_posts extends WP_Widget
 
         parent::__construct(
             'recent_posts',  // Base ID
-            'Recent posts halim'   // Name
+            'Recent posts belfast'   // Name
         );
 
         add_action('widgets_init', function () {
@@ -18,12 +18,6 @@ class recent_posts extends WP_Widget
         });
     }
 
-    public $args = array(
-        'before_title'  => '<h4>',
-        'after_title'   => '</h4>',
-        'before_widget' => '<div class="single-sidebar">',
-        'after_widget'  => '</div>'
-    );
 
     public function widget($args, $instance)
     {
@@ -32,34 +26,46 @@ class recent_posts extends WP_Widget
         $title = !empty($instance['title']) ? $instance['title'] : __('Recent posts', 'halim');
         // $title =  $instance['title']
 ?>
-        <h4><?php echo $title; ?></h4>
-        <ul>
+
+
+        <div class="sidebar-post">
+            <?php if (!empty($title))
+                echo $args['before_title'] . $title . $args['after_title'];
+            ?>
+
             <?php
-            wp_reset_postdata();
             $post_args = array(
                 'post_type' => 'post',
                 'posts_per_page' => $instance['number'],
                 // 'order_by' => 'date',
                 'order' => $instance['order']
+
             );
+
             $query = new WP_Query($post_args);
-            while ($query->have_posts()) {
-                $query->the_post();
 
             ?>
 
-                <a href="<?php the_permalink() ?>">
-                    <li class=" latest-posts">
-                        <img src="<?php the_post_thumbnail_url() ?>" alt="" height="auto" width="60px">
-                        <?php the_title() ?>
-                    </li>
-                </a>
+            <?php if ($query->have_posts()) : ?>
+                <?php while ($query->have_posts()) : $query->the_post(); ?>
 
-            <?php   }
-            wp_reset_postdata()  ?>
+                    <div class="single-post">
+                        <div class="img-box"><a href="post1.html">
+                                <figure><img src="<?php echo get_the_post_thumbnail_url() ?>" alt=""></figure>
+                            </a></div>
+                        <h6><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h6>
+                        <div class="text"><?php echo get_the_date()  ?></div>
+                    </div>
 
 
-        </ul>
+                <?php endwhile; ?>
+            <?php endif; ?>
+
+            <?php wp_reset_query(); ?>
+
+        </div>
+
+
     <?php
         echo $args['after_widget'];
     }
@@ -102,4 +108,10 @@ class recent_posts extends WP_Widget
     //     return $instance;
     // }
 }
-$my_widget = new recent_posts();
+
+// Register and load the widget
+function recent_posts_load_widget()
+{
+    register_widget('recent_posts');
+}
+add_action('widgets_init', 'recent_posts_load_widget');
